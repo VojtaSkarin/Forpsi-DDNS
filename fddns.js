@@ -75,8 +75,8 @@ async function update(currentIp, listedIp) {
 	await page.goto('https://admin.forpsi.com');
 	
 	page.evaluate(() => {
-		document.getElementById('user_name').value = '559242D3';
-		document.getElementById('password').value = 'Forpsi3bf30251327*';
+		document.getElementById('user_name').value = process.env.FORPSI_LOGIN;
+		document.getElementById('password').value = process.env.FORPSI_PASSWORD;
 		document.getElementsByClassName('submit')[1].childNodes[0].click();		
 	});
 	
