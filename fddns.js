@@ -1,6 +1,5 @@
 const puppeteer = require('puppeteer');
 const https = require('https')
-const FormData = require('form-data')
 const fs = require('fs')
 
 function request(options, routine) {
@@ -121,4 +120,5 @@ async function update(currentIp, listedIp) {
 	console.log('Sucessfully updated')
 }
 
+console.log('Launching Forpsi DDNS')
 setInterval(getCurrentIp, 300000)
