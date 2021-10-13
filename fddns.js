@@ -72,12 +72,12 @@ async function update(currentIp, listedIp) {
 	const browser = await puppeteer.launch({headless: false});
 	const page = await browser.newPage();
 	await page.goto('https://admin.forpsi.com');
-	
-	page.evaluate(() => {
-		document.getElementById('user_name').value = process.env.FORPSI_LOGIN;
-		document.getElementById('password').value = process.env.FORPSI_PASSWORD;
+
+	page.evaluate((login, password) => {
+		document.getElementById('user_name').value = login;
+		document.getElementById('password').value = password;
 		document.getElementsByClassName('submit')[1].childNodes[0].click();		
-	});
+	}, process.env.FORPSI_LOGIN, process.env.FORPSI_PASSWORD);
 	
 	await page.waitForNavigation({
 		waitUntil: 'networkidle0'
@@ -118,7 +118,10 @@ async function update(currentIp, listedIp) {
 	}), 1000)
 	
 	console.log('Sucessfully updated')
+	
 }
 
 console.log('Launching Forpsi DDNS')
+
+getCurrentIp();
 setInterval(getCurrentIp, 300000)
