@@ -8,3 +8,4 @@
 # Unignore needed files
 !fddns.js
 !setup_unix.sh
+!readme.md
