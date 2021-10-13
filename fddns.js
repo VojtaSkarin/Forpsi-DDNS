@@ -69,7 +69,10 @@ function getListedIp(currentIp) {
 }
 
 async function update(currentIp, listedIp) {
-	const browser = await puppeteer.launch({headless: false});
+	const browser = await puppeteer.launch({
+		headless: true,
+		executablePath: process.env.CHROMIUM_PATH,
+	});
 	const page = await browser.newPage();
 	await page.goto('https://admin.forpsi.com');
 
