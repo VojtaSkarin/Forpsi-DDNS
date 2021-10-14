@@ -21,20 +21,14 @@ function getCurrentIp() {
 	currentIp = ''
 
 	options = {
-		host: 'whatsmyip.com',
+		host: 'api.ipify.org',
+		protocol: 'https:',
 		port: 443,
 		method: 'GET'
 	}
 
 	request(options, result => {
-		start = result.indexOf('&nbsp;')
-		end = result.indexOf('<', start)
-			
-		currentIp = result.substring(start + 6, end)
-
-		/*parts = ipStr.split('.')
-			
-		currentIp = parts.map(part => parseInt(part))*/
+		currentIp = result
 		
 		console.log('Current external ip is ' + currentIp)
 		
@@ -64,6 +58,8 @@ function getListedIp(currentIp) {
 			console.log('Listed ip is outdated. Updating...')
 			
 			update(currentIp, listedIp)
+		} else {
+			console.log('Listed ip is up to date.');
 		}
 	})
 }
