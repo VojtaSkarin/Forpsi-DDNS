@@ -2,6 +2,10 @@ const puppeteer = require('puppeteer');
 const https = require('https')
 const fs = require('fs')
 
+function log(string) {
+	console.log(new Date().toLocaleString(), string);
+}
+
 function request(options, routine) {
 	https.get(options, res => {
 		data = ''
@@ -30,7 +34,7 @@ function getCurrentIp() {
 	request(options, result => {
 		currentIp = result
 		
-		console.log('Current external ip is ' + currentIp)
+		log('Current external ip is ' + currentIp)
 		
 		getListedIp(currentIp)
 	})
@@ -52,14 +56,14 @@ function getListedIp(currentIp) {
 		
 		listedIp = json.Answer[0].data
 	
-		console.log('Current listed ip is ' + listedIp)
+		log('Current listed ip is ' + listedIp)
 		
 		if (currentIp != listedIp) {
-			console.log('Listed ip is outdated. Updating...')
+			log('Listed ip is outdated. Updating...')
 			
 			update(currentIp, listedIp)
 		} else {
-			console.log('Listed ip is up to date.');
+			log('Listed ip is up to date.');
 		}
 	})
 }
@@ -116,11 +120,11 @@ async function update(currentIp, listedIp) {
 		document.getElementsByClassName('btn blue small')[3].click()
 	}), 1000)
 	
-	console.log('Sucessfully updated')
+	log('Sucessfully updated.')
 	
 }
 
-console.log('Launching Forpsi DDNS')
+log('Launching Forpsi DDNS.')
 
 getCurrentIp();
 setInterval(getCurrentIp, 300000)
