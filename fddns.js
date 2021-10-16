@@ -127,4 +127,6 @@ async function update(currentIp, listedIp) {
 log('Launching Forpsi DDNS.')
 
 getCurrentIp();
-setInterval(getCurrentIp, 300000)
+
+// Repeat query each hour
+setInterval(getCurrentIp, 60 * 60 * 1000);
