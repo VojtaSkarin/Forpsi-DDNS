@@ -7,7 +7,7 @@ function log(string) {
 }
 
 function request(options, routine) {
-	https.get(options, res => {
+	req = https.request(options, res => {
 		data = ''
 		
 		res.on('data', chunk => {
@@ -17,7 +17,17 @@ function request(options, routine) {
 		res.on('end', () => {
 			routine(data)
 		})
-	})
+	});
+	
+	req.on('error', e => {
+		log('Error while processing https request.');
+		console.log(e);
+		
+		// Repeat request each 10 mins until internet connection reestablished
+		setInterval(() => request(options, routine), 10 * 60 * 1000);
+	});
+	
+	req.end();
 }
 
 // Get current IP
@@ -26,8 +36,9 @@ function getCurrentIp() {
 
 	options = {
 		host: 'api.ipify.org',
-		protocol: 'https:',
+		path: '',
 		port: 443,
+		protocol: 'https:',
 		method: 'GET'
 	}
 
@@ -37,7 +48,7 @@ function getCurrentIp() {
 		log('Current external ip is ' + currentIp)
 		
 		getListedIp(currentIp)
-	})
+	});
 }
 
 // Get listed ip
@@ -48,6 +59,7 @@ function getListedIp(currentIp) {
 		host: 'dns.google',
 		path: '/resolve?name=zemechvaly.cz&amp;type=A',
 		port: 443,
+		protocol: 'https:',
 		method: 'GET'
 	}
 
