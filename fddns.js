@@ -24,7 +24,7 @@ function request(options, routine) {
 		console.log(e);
 		
 		// Repeat request each 10 mins until internet connection reestablished
-		setInterval(() => request(options, routine), 10 * 60 * 1000);
+		setTimeout(() => request(options, routine), 10 * 60 * 1000);
 	});
 	
 	req.end();
