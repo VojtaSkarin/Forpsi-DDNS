@@ -28,11 +28,7 @@ function request(options, data, routineData, routineResponse) {
 		console.log(e);
 		
 		// Repeat request each 10 mins until internet connection reestablished
-<<<<<<< HEAD
-		setInterval(() => request(options, data, routineData, routineResponse), 10 * 60 * 1000);
-=======
-		setTimeout(() => request(options, routine), 10 * 60 * 1000);
->>>>>>> 74f593983c3f06a6fc6c1cac9fc31beb96e54378
+		setTimeout(() => request(options, data, routineData, routineResponse), 10 * 60 * 1000);
 	});
 	
 	req.write(data);
@@ -124,7 +120,6 @@ function logIn(currentIp, listedIp) {
 	data = 'login_action=client_login&user_name=' + credentials.login + '&password=' + credentials.password;
 
 	request(options, data, emptyRoutine, response => {
-		console.log(response.headers);
 		cookies = response.headers['set-cookie'];
 		fauth = cookies[1].split('; ')[0];
 		session = cookies[2].split('; ')[0];
