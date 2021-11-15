@@ -1,8 +1,6 @@
 const https = require('https')
 const fs = require('fs')
 
-const credentials = require('.\\credentials.json');
-
 const emptyRoutine = input => {};
 
 function log(string) {
@@ -117,7 +115,7 @@ function logIn(currentIp, listedIp) {
 		}
 	};
 	
-	data = 'login_action=client_login&user_name=' + credentials.login + '&password=' + credentials.password;
+	data = 'login_action=client_login&user_name=' + process.env.FORPSI_LOGIN + '&password=' + process.env.FORPSI_PASSWORD;
 
 	request(options, data, emptyRoutine, response => {
 		cookies = response.headers['set-cookie'];
