@@ -131,6 +131,8 @@ function logIn(currentIp, listedIp) {
 }
 
 function update(currentIp, listedIp, fauth, session) {
+	data = 'type=A&url=%2Fdomain%2Fdomains-dns.php%3Fid%3D1616858&ak=record_save&r_ID=22549&srv_service=&srv_protocol=_tcp&tlsa_port=&tlsa_protocol=_tcp&name=&ttl=60&mx_priority=10&srv_priority=10&srv_weight=&srv_port=&flags=0&tag=issue&rdata=' + currentIp;
+	
 	options = {
 		protocol: 'https:',
 		hostname: 'admin.forpsi.com',
@@ -143,7 +145,7 @@ function update(currentIp, listedIp, fauth, session) {
 			'Accept-Language': 'cs-CZ,cs;q=0.9,en-GB;q=0.8,en;q=0.7',
 			'Cache-Control': 'max-age=0',
 			'Connection': 'keep-alive',
-			'Content-Length': '244',
+			'Content-Length': data.length.toString(),
 			'Content-Type': 'application/x-www-form-urlencoded',
 			'Cookie': 'LANG=cz; _ga=GA1.2.952210824.1636921116; _gid=GA1.2.1252681959.1636921116; ' + fauth + '; ' + session + '; _gat=1; cookiesDirective=1',
 			'Host': 'admin.forpsi.com',
@@ -161,11 +163,14 @@ function update(currentIp, listedIp, fauth, session) {
 		}
 	};
 	
-	data = 'type=A&url=%2Fdomain%2Fdomains-dns.php%3Fid%3D1616858&ak=record_save&r_ID=22549&srv_service=&srv_protocol=_tcp&tlsa_port=&tlsa_protocol=_tcp&name=&ttl=60&mx_priority=10&srv_priority=10&srv_weight=&srv_port=&flags=0&tag=issue&rdata=' + currentIp;
-	
-	request(options, data, emptyRoutine, response => {
-		log('Sucessfully updated.');
-	});
+	request(options, data, content => {
+		if (content.length != 0) {
+			log('Update was not successful.');
+			console.log(content);
+		} else {
+			log('Successfully updated');
+		}
+	}, emptyRoutine);
 }
 
 log('Launching Forpsi DDNS.')
